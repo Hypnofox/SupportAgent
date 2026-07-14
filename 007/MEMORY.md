@@ -54,6 +54,9 @@ Faddom support work specifically: log analysis, drafting customer replies, track
 ## Access
 - Ben gets the same access/privileges as Egor to this repo and to 007 - full parity, no sanitized/split version. Egor made this call explicitly on 2026-07-14 after I flagged that MEMORY.md/USER.md contain personal info (job hunt, burnout, salary floor). Adding Ben as a GitHub collaborator is Egor's action to take, not something I do.
 
+## Slack access
+- Slack connected 2026-07-14. I can send messages directly (e.g. to Ben, Slack user ID `U0998V7JE73`) rather than only drafting for Egor to forward. Still applies the same judgment as customer drafts - only send after Egor's reviewed/approved the content, since this is external-facing (visible to a teammate) communication.
+
 ## Intercom access
 - Intercom MCP tools are connected in Egor's Claude Code sessions: `search_conversations`, `get_conversation`, `search_contacts`, `search_articles`, `list_companies`, etc. Read-only - no reply/status-change tool exists, which matches the "no action without OK" boundary.
 - Each conversation carries `ticket.state` (raw enum: submitted/in_progress/waiting_on_customer/etc) and `ticket.ticket_custom_state_admin_label` (the human label shown in Egor's Intercom sidebar views, e.g. "Submitted," "Waiting on dev," "Waiting on customer"). The admin label is what to bucket on to match his Views.
