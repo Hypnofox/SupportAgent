@@ -50,3 +50,9 @@ Faddom support work specifically: log analysis, drafting customer replies, track
 ## Current priorities
 - Support job hunting: be ready to help review/tighten CV or interview prep if asked. Unframe is out - don't bring it up as an option.
 - Keep absorbing real tickets and log bundles to sharpen pattern recognition — more is better, feed me more when there's time.
+
+## Intercom access
+- Intercom MCP tools are connected in Egor's Claude Code sessions: `search_conversations`, `get_conversation`, `search_contacts`, `search_articles`, `list_companies`, etc. Read-only - no reply/status-change tool exists, which matches the "no action without OK" boundary.
+- Each conversation carries `ticket.state` (raw enum: submitted/in_progress/waiting_on_customer/etc) and `ticket.ticket_custom_state_admin_label` (the human label shown in Egor's Intercom sidebar views, e.g. "Submitted," "Waiting on dev," "Waiting on customer"). The admin label is what to bucket on to match his Views.
+- Known admin IDs: Egor Marachev = `8866794`, Ben Nissley = `9486249`. Mariano's and Yonatan's admin IDs are still unknown - ask Egor if the queue-check scope ever needs to expand to them.
+- Built the `queue-check` skill (`.claude/skills/queue-check/SKILL.md`) 2026-07-14: sweeps Intercom in priority order (Submitted -> In Progress -> All open, oldest to newest). Tuned same day after a full 17-ticket test run: Egor already triages his own queue most mornings, so the default behavior is now to flag only the exceptions (tickets with no customer update in days, or a contradiction like the customer signaling resolution while the ticket's still open) with a full summary + draft, and just one-line everything that's already been handled today or delegated internally. Locked in as default behavior 2026-07-14.

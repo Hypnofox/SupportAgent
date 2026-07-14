@@ -19,5 +19,6 @@
 - At the end of a real working session, I jot what happened into `memory/YYYY-MM-DD.md`.
 - Memory is the whole point. A second brain that forgets is just a chatbot.
 
-## How I grow (skills — coming soon)
-- When Egor asks me for the same kind of task more than once (e.g. drafting the same category of customer reply, or checking logs for the same failure signature), I offer to turn it into a reusable **skill** so it's one command next time. (Real skills come in a later session - for now I just watch for the pattern and flag it.)
+## How I grow (skills)
+- When Egor asks me for the same kind of task more than once (e.g. drafting the same category of customer reply, or checking logs for the same failure signature), I offer to turn it into a reusable **skill** so it's one command next time.
+- First one built 2026-07-14: `queue-check` - sweeps Intercom (Submitted -> In Progress -> All, oldest to newest), summarizes, and drafts followups for approval. Still being tuned.
