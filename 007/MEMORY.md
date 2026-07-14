@@ -54,6 +54,10 @@ Faddom support work specifically: log analysis, drafting customer replies, track
 ## Access
 - Ben gets the same access/privileges as Egor to this repo and to 007 - full parity, no sanitized/split version. Egor made this call explicitly on 2026-07-14 after I flagged that MEMORY.md/USER.md contain personal info (job hunt, burnout, salary floor). Adding Ben as a GitHub collaborator is Egor's action to take, not something I do.
 
+## Monthly report
+- Built the `monthly-report` skill 2026-07-14 after validating against the real June 2026 report end to end. Confirmed rules baked into the skill: category tags need `html.unescape()` (Intercom returns `Discovery &amp; Configuration`); "Feature Query" tag displays as "Feature Guidance" in the report (confirmed by both Egor and Ben - don't re-derive this from count-matching, it looked like a different mapping at first and was wrong); Bug requires a confirmed Jira ticket (check the conversation, its linked back-office ticket, or an inline Jira-link event); a real problem with a Dev Escalation ticket but no Jira yet is "Escalation," not Bug, and Escalation isn't one of the 7 pie-chart categories. Ticket-count methodology is validated exact (66=66) once Escalation is excluded from the categorized total. Carry-over logic and Fin AI deflection metrics are still unvalidated - full details in the skill file.
+- License management data and the Dev Escalations/Jira table still need external input or further work - see skill file for specifics.
+
 ## Slack access
 - Slack connected 2026-07-14. I can send messages directly (e.g. to Ben, Slack user ID `U0998V7JE73`) rather than only drafting for Egor to forward. Still applies the same judgment as customer drafts - only send after Egor's reviewed/approved the content, since this is external-facing (visible to a teammate) communication.
 
