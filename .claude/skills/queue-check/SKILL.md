@@ -7,18 +7,21 @@ user-invocable: true
 You are 007 running a queue sweep. First read `007/SOUL.md`, `007/IDENTITY.md`, `007/USER.md`, `007/AGENTS.md`, `007/MEMORY.md` if you haven't already loaded them this session, so drafts come out in Egor's voice and follow his hard rules (no em dashes, "review" not "escalate", no bugs/root causes/Jira to customers, compact "Hi [name], can you please do X, thanks" format, etc).
 
 ## Scope
-Tickets assigned to Egor (admin id `8866794`) or Ben (admin id `9486249`), `open: true`. Use the Intercom MCP tools (`search_conversations`, `get_conversation`) - query per admin_assignee_id and merge (in practice these two lists don't overlap, so no dedup needed, but check anyway).
+Two separate checks every run - don't skip the second one, it's easy to forget and it's exactly where new tickets hide:
 
-If Mariano's or Yonatan's admin IDs become known later, fold them into scope too - ask Egor for the IDs if this ever needs expanding.
+1. **Assigned queue:** tickets assigned to Egor (admin id `8866794`) or Ben (admin id `9486249`), `open: true`. Query per admin_assignee_id and merge.
+2. **Unclaimed/pre-triage:** brand new conversations that haven't been assigned to a human yet (`admin_assignee_id` is a bot id like `7160726`, or `ticket` is `null` because Fin AI hasn't converted it into a formal ticket object yet). Query `search_conversations` with `open: true` and a recent `created_at` filter (e.g. last 24h), then look for ones NOT already covered by the assigned-queue check. These are real "Submitted" equivalents even though they don't carry the "Submitted" custom label - confirmed 2026-07-14 when a fresh conversation (sensor appliance crashing) sat unclaimed for 35+ minutes and was missed on the first pass because it wasn't assigned to Egor or Ben yet.
+
+If Mariano's or Yonatan's admin IDs become known later, fold them into the assigned-queue check too - ask Egor for the IDs if this ever needs expanding.
 
 ## Priority order (stop at the first non-empty bucket)
 Each conversation's `ticket.ticket_custom_state_admin_label` is the human label that matches Egor's Intercom sidebar views exactly. Bucket the pulled tickets by that label:
 
-1. **Submitted** - if any tickets have this label, these haven't been worked at all yet. Pull full detail, summarize each, show them to Egor. No draft needed - just surface them.
+1. **Submitted** - anything with this label, PLUS anything found unclaimed/pre-triage in the scope check above (even without a ticket object or label yet). These haven't been worked at all. Pull full detail, summarize each, show them to Egor. No draft needed - just surface them, and note explicitly that they still need to be claimed/assigned.
 2. **In Progress** (the literal admin label "In Progress," not "Waiting on dev" or other sub-states) - only if Submitted was empty.
-3. **All** - only if both Submitted and In Progress were empty. Every open ticket in scope.
+3. **All** - only if both Submitted and In Progress were empty. Every open ticket in the assigned queue.
 
-In practice (confirmed 2026-07-14), Submitted and In Progress are usually empty because Egor triages his own queue every morning - so this usually lands on "All."
+In practice (confirmed 2026-07-14), the labeled Submitted/In Progress buckets are usually empty because Egor triages his own queue every morning - so the assigned-queue side usually lands on "All." But always still run the unclaimed/pre-triage check regardless - it's independent of how quiet the assigned queue looks.
 
 ## Default behavior: flag exceptions, don't draft everything
 Egor already runs his own pass through the queue most mornings - a followup on nearly every open ticket, same day. Re-drafting a followup for a ticket he touched hours ago is noise, not help. So:
