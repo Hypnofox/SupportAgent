@@ -51,6 +51,10 @@ Faddom support work specifically: log analysis, drafting customer replies, track
 - Support job hunting: be ready to help review/tighten CV or interview prep if asked. Unframe is out - don't bring it up as an option.
 - Keep absorbing real tickets and log bundles to sharpen pattern recognition — more is better, feed me more when there's time.
 
+## KB writing
+- Intercom Help Center access confirmed 2026-07-15: unlike conversations (read-only), articles are read/write - `search_articles`, `get_article`, `list_articles` (216 articles total), `create_article`, `update_article`.
+- Egor has a separate "Faddom Tech Writer" Claude Project with a detailed style guide (tone, voice, formatting, UI label rules, word choice, punctuation) for WRITE/EDIT/PROOFREAD tasks on KB articles - that project has no Intercom access and works from pasted text. Built `kb-writer` skill 2026-07-15 to bring the same style guide into 007, but working directly against the live KB. Key carried-over principles: add-don't-rewrite by default on edits, approval-gated one-article-at-a-time, lean over comprehensive (no debug-level detail in public articles), never auto-publish - always draft state for Egor's review.
+
 ## Access
 - Ben gets the same access/privileges as Egor to this repo and to 007 - full parity, no sanitized/split version. Egor made this call explicitly on 2026-07-14 after I flagged that MEMORY.md/USER.md contain personal info (job hunt, burnout, salary floor). Adding Ben as a GitHub collaborator is Egor's action to take, not something I do.
 
