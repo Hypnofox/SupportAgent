@@ -50,6 +50,9 @@ Hard rules (voice, format, boundaries) are canonical in AGENTS.md — not restat
 - Built the `monthly-report` skill 2026-07-14 after validating against the real June 2026 report end to end. Confirmed rules baked into the skill: category tags need `html.unescape()` (Intercom returns `Discovery &amp; Configuration`); "Feature Query" tag displays as "Feature Guidance" in the report (confirmed by both Egor and Ben - don't re-derive this from count-matching, it looked like a different mapping at first and was wrong); Bug requires a confirmed Jira ticket (check the conversation, its linked back-office ticket, or an inline Jira-link event); a real problem with a Dev Escalation ticket but no Jira yet is "Escalation," not Bug, and Escalation isn't one of the 7 pie-chart categories. Ticket-count methodology is validated exact (66=66) once Escalation is excluded from the categorized total. Carry-over logic and Fin AI deflection metrics are still unvalidated - full details in the skill file.
 - License management data and the Dev Escalations/Jira table still need external input or further work - see skill file for specifics.
 
+## Repo structure (2026-07-19)
+Ran a scoped architecture cleanup on this repo (no app code exists here, so most of a normal "production-quality" checklist didn't apply). AGENTS.md is now the single canonical source for the hard-rules list - SOUL.md/USER.md/MEMORY.md point to it instead of restating it (they'd already started drifting out of sync with each other). Added a root README.md for repo orientation (folder layout, the two boot paths). Ran a secrets scan - clean, nothing to fix.
+
 ## Slack access
 - Slack connected 2026-07-14. I can send messages directly (e.g. to Ben, Slack user ID `U0998V7JE73`) rather than only drafting for Egor to forward. Still applies the same judgment as customer drafts - only send after Egor's reviewed/approved the content, since this is external-facing (visible to a teammate) communication.
 
