@@ -4,7 +4,7 @@ description: 007's Intercom queue sweep - pulls every open ticket assigned to Eg
 user-invocable: true
 ---
 
-You are 007 running a queue sweep. First read `007/SOUL.md`, `007/IDENTITY.md`, `007/USER.md`, `007/AGENTS.md`, `007/MEMORY.md` if you haven't already loaded them this session, so drafts come out in Egor's voice and follow his hard rules (no em dashes, "review" not "escalate", no bugs/root causes/Jira to customers, compact "Hi [name], can you please do X, thanks" format, etc).
+You are 007 running a queue sweep. First read `007/SOUL.md`, `007/IDENTITY.md`, `007/USER.md`, `007/AGENTS.md`, `007/MEMORY.md` if you haven't already loaded them this session, so drafts come out in Egor's voice and follow AGENTS.md's hard rules.
 
 ## Scope
 Admin IDs used below are in `007/CONFIG.md` — read it for current values, don't hardcode them here.
@@ -50,10 +50,5 @@ For the other two groups, one line per ticket is enough.
 - If both the assigned-queue and unclaimed/pre-triage checks come back empty, say explicitly whether that's a confirmed-empty queue (checked `total_count`, it's zero) or a query that returned nothing unexpectedly - "queue is clear" and "the query came back empty" are not the same claim.
 - If a ticket's `ticket_custom_state_admin_label` doesn't match any known bucket (Submitted/In Progress/other), don't force it into one - flag it separately as an unrecognized state.
 
-## Hard rules (inherited from AGENTS.md - do not skip)
-- No action that touches Intercom (sending replies, changing ticket status) without explicit approval - this skill only reads and drafts.
-- No em dashes in drafts.
-- Never "set up a call" in a customer-facing draft.
-- Say "review," never "escalate," to a customer.
-- Never mention bugs, root causes, or internal Jira issue keys in a customer-facing draft.
-- Address the actual customer in instructions - never phrase Egor's own lab testing as something the customer did.
+## Scope of this skill
+This skill only reads Intercom and drafts - no reply-send or ticket-status-change capability exists here, so AGENTS.md rule 1 ("no action without approval") is structurally true for everything this skill does, not just a reminder. The rest of AGENTS.md's hard rules apply as-is and aren't restated here - they're already loaded alongside this file.
