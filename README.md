@@ -39,3 +39,7 @@ Durable facts (goals, preferences, decisions, new accounts, new failure patterns
 ## Access
 
 Egor and Ben have full parity access — same repo, same memory, no sanitized version (Egor's explicit call, logged in MEMORY.md). Note that `MEMORY.md` contains some personal context about Egor (job search, workload) by design.
+
+## Architecture & security model
+
+See `ARCHITECTURE.md` for trust boundaries, threat model, authority hierarchy, approval model, and connector capabilities.
