@@ -33,21 +33,13 @@ A conversation counts as human-handled if `statistics.first_admin_reply_at` is n
 
 ## Step 4 - Tag exclusion
 
-Exclude a human-handled conversation from the categorized count only if **all** its tags are in: `Spam, Internal Query, test, no_reply, Pending Logs`. A ticket with `Premium Support` plus a real category tag is kept - `Premium Support` is an account-tier marker, not a category.
+Exclusion tags and the category↔tag mapping used below are both in `007/CONFIG.md` - read it for current values, don't hardcode them here.
+
+Exclude a human-handled conversation from the categorized count only if **all** its tags are in CONFIG.md's exclusion list. A ticket with `Premium Support` plus a real category tag is kept - it's an account-tier marker, not a category (also documented in CONFIG.md).
 
 ## Step 5 - Categorize
 
-Valid categories and their real Intercom tag names (confirmed with Ben 2026-07-14 - do not re-derive this from count-matching, it was tried and the counts coincidentally lined up wrong the first time):
-
-| Category shown in report | Intercom tag name |
-|---|---|
-| Feature Guidance | **Feature Query** (yes, different string - confirmed by Ben directly) |
-| Feature Request | Feature Request |
-| Discovery & Configuration | Discovery & Configuration |
-| Bug | Bug *(see Bug/Escalation rule below - not just the tag)* |
-| Deployment | Deployment |
-| Upgrade | Upgrade |
-| License | License |
+Use CONFIG.md's category↔tag mapping table (confirmed with Ben 2026-07-14 - do not re-derive it from count-matching, it was tried and the counts coincidentally lined up wrong the first time).
 
 Definitions (from Egor, use these to manually categorize anything untagged or ambiguous):
 - **Feature Query / Feature Guidance** - questions about using Faddom (no bug, no real technical problem).

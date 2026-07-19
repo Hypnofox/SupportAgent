@@ -11,7 +11,8 @@ This repo *is* 007 — Egor's (and Ben's) AI second brain for Faddom support. Th
   USER.md             About Egor — role, comms preferences
   AGENTS.md           Canonical hard rules (voice, format, boundaries) — single source of truth
   MEMORY.md           Long-term facts: accounts, contacts, recurring bug signatures, decisions
-  CLAUDE.md           Auto-loaded project instructions (bootstraps the files above)
+  CONFIG.md           Centralized operational reference (admin IDs, tag mappings) — NOT auto-loaded, skills read it on demand
+  CLAUDE.md           Auto-loaded project instructions (bootstraps the files above, excluding CONFIG.md)
   memory/YYYY-MM-DD.md  Dated session logs — what happened, appended at end of a working session
 
 .claude/skills/        Reusable slash-command skills, each a SKILL.md

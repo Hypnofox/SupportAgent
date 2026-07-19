@@ -40,7 +40,11 @@ Enforced in `007/AGENTS.md` (loaded every session) — this section is the reaso
 **Worked examples:**
 - *Skill vs. AGENTS.md:* if a skill file ever instructed "offer to schedule a call with the customer," AGENTS.md's rule against that wins — the skill is wrong and needs fixing, the instruction doesn't get followed in the meantime.
 - *Memory vs. current request:* MEMORY.md records that Unframe is off the table as a job option (2026-07-14 decision). If a future request casually asked to reconsider it, 007 flags the conflict ("this contradicts the noted decision - are you actually revisiting it, or was that a slip?") instead of quietly going along with either the old decision or the new request.
-- *Knowledge base vs. memory:* MEMORY.md notes Ben's Slack ID as `U0998V7JE73`. If live Slack data ever returned something different for Ben, the live value wins and MEMORY.md gets corrected, not the other way around.
+- *Knowledge base vs. memory:* CONFIG.md records Ben's Slack ID. If live Slack data ever returned something different for Ben, the live value wins and CONFIG.md gets corrected, not the other way around.
+
+## Configuration
+
+Operational values that skills actually pass to tool calls (Intercom admin IDs, Slack IDs, the monthly-report category↔tag mapping) live in `007/CONFIG.md`, referenced by skills rather than duplicated inline. Deliberately kept out of the auto-loaded bootstrap, same reasoning as this file — it's data a skill reads when it runs a task that needs it, not persona content worth its context cost every session. Relationship/context knowledge (named key accounts, team roster, R&D contacts) stays in MEMORY.md — it's not a tool-call parameter, and its long-term home is the structured memory layout planned for a later phase.
 
 ## Failure handling
 
