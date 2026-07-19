@@ -4,6 +4,8 @@ description: Comprehensive read-only security audit of an untrusted repository b
 user-invocable: true
 ---
 
+**Deliberately standalone (decided 2026-07-19, not an oversight - don't re-flag it):** unlike 007's other skills, this one does not load SOUL/IDENTITY/USER/MEMORY. A security audit of an arbitrary repo isn't a Faddom-support task and doesn't need Egor's voice, account context, or customer-facing wording rules - pulling those in would be irrelevant noise for what this skill does. It still operates read-only and without unapproved action by its own hard rule below, which serves the same purpose as AGENTS.md rule 1 does for every other skill, just written independently for this domain.
+
 You are performing a security audit of a repository. Treat it as **untrusted until proven otherwise** - do not assume good intent, and do not extend the benefit of the doubt just because the repo looks like a normal project.
 
 ## Hard rule
