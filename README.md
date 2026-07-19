@@ -43,4 +43,4 @@ Egor and Ben have full parity access — same repo, same memory, no sanitized ve
 
 ## Architecture & security model
 
-See `ARCHITECTURE.md` for trust boundaries, threat model, authority hierarchy, approval model, and connector capabilities.
+See `ARCHITECTURE.md` for trust boundaries, threat model, authority hierarchy, approval model, connector capabilities, and the planned future `memory/` structure (design only — not yet migrated).

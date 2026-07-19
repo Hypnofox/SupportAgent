@@ -74,9 +74,60 @@ What's actually connected in a 007 session, and what each grants:
 | Atlassian/Jira & Confluence | Read (issues, projects, Confluence pages), some write. | Not used by any documented skill — Jira issue keys are referenced as *data* (read from Intercom custom fields), not fetched directly via this connector in any skill today. |
 | GitHub | Full read/write on repos in scope (this repo and `timetrack`). | Used for 007's own development (this repo), not a Faddom-support capability. |
 
+## Future memory structure (planned — not yet migrated)
+
+MEMORY.md is not being split yet — at ~80 lines it's still well under the ~150-200 line trigger the original architecture review set for when the split earns its cost. This section documents the target design now, so when that trigger is hit the split is a mechanical move against an agreed plan, not a redesign done under time pressure. **Nothing in this section has been implemented. MEMORY.md is unchanged.**
+
+### Target layout
+```
+007/
+  MEMORY.md         becomes an index only — stays in the always-loaded bootstrap, short
+  memory/
+    YYYY-MM-DD.md    dated session logs (unchanged, already exists)
+    people.md        who's who: Egor, Ben, Mariano, Yonatan, R&D contacts, roles/relationships
+    decisions.md      dated decision/changelog entries (skill builds, validations, access calls)
+    customers.md      named key accounts + why they need care, per-account context
+    patterns.md       recurring technical knowledge: log signatures, fix procedures, formats
+    environment.md    narrative about the tooling/systems 007 operates in (capabilities, field semantics)
+    personal.md       sensitive Egor-specific context (job search, workload) — see note below
+```
+
+### How today's MEMORY.md maps onto it
+- **people.md** ← the role/team parts of "About Egor," plus "Their world"'s R&D contacts and team roster.
+- **decisions.md** ← "KB writing," "Access," "Monthly report," "Repo structure" — these sections are already a changelog in disguise, just not labeled as one.
+- **customers.md** ← "Their world"'s named-accounts list, plus the VW Argentina paragraph currently sitting in "Key facts & decisions."
+- **patterns.md** ← everything else in "Key facts & decisions": transcript format, log bundle format, recurring log signatures, the proxy-auth-token fix procedure.
+- **environment.md** ← the narrative parts of "Slack access" and "Intercom access" (capabilities, field semantics — the raw IDs already moved to CONFIG.md in Phase 4, so this file explains behavior, CONFIG.md holds the parameters).
+- **personal.md** ← "Their goals" and the personal parts of "Current priorities" (job hunting, burnout, salary floor, CV link).
+- **Not migrated anywhere:** "What I own" duplicates SOUL.md's charter already — a candidate for deletion at split time, not a seventh topic file. Flagging it now so it isn't carried over as more duplication.
+
+### Migration rules (apply only when the split actually happens)
+1. **Trigger:** MEMORY.md crossing ~150-200 lines — not before. Splitting a file this small today would be premature structure for a problem that doesn't exist yet.
+2. **Copy content, don't drop it** — every fact currently in MEMORY.md lands somewhere in the new layout; nothing gets silently lost in the move.
+3. **Placement test**, applied to each fact in order, first match wins:
+   - A literal parameter a skill passes to a tool call (an ID, a mapping)? → Not memory at all — `CONFIG.md` (Phase 4), not a topic file.
+   - About a specific person (role, contact, relationship)? → `people.md`
+   - A decision or build/validation event tied to a date? → `decisions.md`
+   - About a specific customer/account? → `customers.md`
+   - A recurring technical pattern usable across tickets? → `patterns.md`
+   - About the tooling/systems 007 operates in? → `environment.md`
+   - Sensitive/personal to Egor specifically (career, health, compensation)? → `personal.md`
+   - None of the above, or genuinely one-off/session-specific? → stays in the dated `memory/YYYY-MM-DD.md` log, not a topic file.
+4. **Skill files need a pass at migration time**, not before. Every skill currently says "read MEMORY.md" — some will need to name a specific topic file too (e.g. a `queue-check` run touching a named account would want `customers.md`). Real work when it happens; not solved speculatively now.
+5. **Post-split MEMORY.md** keeps: a short "what I own" pointer (trimmed, not duplicated from SOUL.md) plus one line per topic file naming what's in it — enough for 007 to know a fact probably exists and where to look, without loading everything.
+
+### Retrieval strategy
+- MEMORY.md (the index) stays in the always-loaded bootstrap exactly as today — small, cheap, always available.
+- Topic files under `memory/` are **not** auto-loaded. 007 or a skill reads the specific file relevant to the task at hand — the same on-demand pattern already established for `CONFIG.md` and this file. A `queue-check` run touching a named account reads `customers.md`; drafting a reply involving a known log signature reads `patterns.md`.
+- No search or indexing layer — a handful of markdown files doesn't need one. A plain Read call is enough; building more (vector search, a query layer) would solve a problem this repo doesn't have. Revisit only if a single topic file itself grows large enough that reading all of it stops being cheap.
+- Dated session logs are the lowest-priority read — narrative history, pulled only for "what happened when," not part of routine skill execution.
+
+### Known consequence, not addressed by this plan
+`personal.md` gets no different access treatment than any other topic file here — Ben would still see it, same as MEMORY.md today, consistent with the existing full-parity decision. If that's ever revisited, `personal.md` is the natural attachment point for scoping, since it's the one file already understood to hold Egor-specific sensitive content. This is a placement note for future reference, not a proposal to change access now.
+
 ## Assumptions and known limitations
 
 - **No technical enforcement exists for any rule in this document.** Every boundary described here (trust, approval, hierarchy) is enforced by the model following written instructions, not by platform-level permissions. This document exists specifically so that fact is visible rather than assumed away.
 - **Connector grants are broader than documented usage.** Google Drive, Notion, and Atlassian are live in-session but no 007 skill uses them. Whether they're intentional standing grants or incidental session scaffolding is unknown — worth a direct question to Egor rather than a guess, and out of scope for this doc to resolve.
-- **No per-user attribution in memory.** Facts written to MEMORY.md aren't tagged with who said them or when trust was established — see the architecture review's finding on shared-identity/no-ACL memory.
+- **No per-user attribution in memory.** Facts written to MEMORY.md aren't tagged with who said them or when trust was established — see the architecture review's finding on shared-identity/no-ACL memory. The planned `personal.md` split (above) doesn't resolve this either, by design — it's noted, not fixed.
 - This document reflects connectors and skills as of 2026-07-19. It should be updated whenever a new connector is granted or a new skill is added with different capability needs.
