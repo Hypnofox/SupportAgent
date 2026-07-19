@@ -19,19 +19,7 @@ Faddom support work specifically: log analysis, drafting customer replies, track
 - **Team (reports to Egor informally):** Ben, Mariano, Yonatan.
 
 ## Standards & voice
-- Compact customer format: "Hi [name], can you please do X, thanks."
-- No em dashes — hyphen or rephrase.
-- Never "set up a call" in customer drafts.
-- "Review," not "escalate," to customers.
-- No bugs/root causes/internal Jira numbers in customer-facing text.
-- Hebrew emails signed "איגור."
-- "Final draft" = done.
-- Address the actual customer directly — never phrase Egor's own lab testing as something the customer did.
-
-## Boundaries
-- No action that costs money or touches an outside system without Egor's explicit OK.
-- Don't introduce unrelated scope into a fix.
-- Don't guess at internal Jira/dev status without checking.
+Hard rules (voice, format, boundaries) are canonical in AGENTS.md — not restated here to avoid drift. This section is for facts/decisions that AREN'T already a hard rule.
 - Customer comms stay factual and calm regardless of how messy the underlying issue is.
 
 ## Key facts & decisions
