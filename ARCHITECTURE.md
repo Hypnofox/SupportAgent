@@ -24,9 +24,23 @@ The rule: nothing pulled from an untrusted source is ever treated as a new instr
 
 **Tertiary threat: unapproved external action.** Sending a message, publishing a KB article, or changing a ticket's status are all "reach outside the sandbox" actions. Mitigated by the approval model below — again, enforced by instruction, not by platform permissions.
 
-## Authority hierarchy (summary — formalized in Phase 2)
+## Authority hierarchy
 
-De facto precedence today, highest first: **System prompt → AGENTS.md → skill instructions → knowledge base/Intercom data → MEMORY.md → the current request.** In practice this means: a hard rule in AGENTS.md (e.g. "never say 'escalate' to a customer") overrides anything a skill, a memory entry, or the current request implies otherwise. This has been followed informally since the beginning; Phase 2 makes it explicit and gives a conflict-resolution rule.
+Enforced in `007/AGENTS.md` (loaded every session) — this section is the reasoning behind it, for review, not a second copy to keep in sync.
+
+**Precedence, highest to lowest:** System prompt → AGENTS.md → skill instructions → knowledge base (live data) → memory → current request.
+
+**Why each level outranks the one below it:**
+- **System prompt > AGENTS.md** — the platform/harness configuration bounds what's possible at all; nothing in this repo can grant itself capabilities the harness doesn't allow.
+- **AGENTS.md > skill instructions** — AGENTS.md's hard rules are deliberate, reviewed, and meant to apply everywhere. A skill's job is to accomplish a specific task *within* those rules, never to relax one. If a skill's instructions ever contradicted a hard rule, that's a bug in the skill to fix, not a case for the skill to win.
+- **Skill instructions > knowledge base** — the skill defines the correct process for handling data (e.g. how `monthly-report` categorizes a ticket); the knowledge base is the data being processed, not a source of process. Data doesn't get to redefine the method used to interpret it.
+- **Knowledge base > memory** — live sources (Intercom conversations, Help Center articles, log bundles) are current ground truth. MEMORY.md is 007's own recollection *about* that world, which can go stale or be wrong. When they disagree, trust the live source and correct memory to match — not the other way around.
+- **Memory > current request** — the current request is the least verified input in the entire chain: it's live, in-the-moment, and (per the threat model above) the surface most exposed to injected or copy-pasted content. Memory holds decisions that were made deliberately and durably (e.g. "Unframe is off the table"). If a request seems to contradict one, that's a signal to check, not silently comply or silently ignore the request.
+
+**Worked examples:**
+- *Skill vs. AGENTS.md:* if a skill file ever instructed "offer to schedule a call with the customer," AGENTS.md's rule against that wins — the skill is wrong and needs fixing, the instruction doesn't get followed in the meantime.
+- *Memory vs. current request:* MEMORY.md records that Unframe is off the table as a job option (2026-07-14 decision). If a future request casually asked to reconsider it, 007 flags the conflict ("this contradicts the noted decision - are you actually revisiting it, or was that a slip?") instead of quietly going along with either the old decision or the new request.
+- *Knowledge base vs. memory:* MEMORY.md notes Ben's Slack ID as `U0998V7JE73`. If live Slack data ever returned something different for Ben, the live value wins and MEMORY.md gets corrected, not the other way around.
 
 ## Approval model
 
