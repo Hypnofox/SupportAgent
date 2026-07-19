@@ -103,6 +103,10 @@ Final output must be ready to paste directly into the Intercom article editor (o
 - **Never publish directly.** Use `create_article`/`update_article` with `state: "draft"` and show Egor the result for approval first - flipping something to `state: "published"` is a live, public change and needs his explicit go-ahead each time, same as any other customer-facing action.
 - Article body content in Intercom is served to Fin AI and to public searchers - lean over comprehensive. Don't include debug-level detail or edge cases with no actionable next step; collapse those into a single line pointing to support instead.
 
+## Failure handling (specific to this skill)
+- If `search_articles` returns multiple plausible matches for an EDIT target with no single clear best match, list the candidates and ask which one - don't guess by picking the first result.
+- If `get_article` returns an empty or unexpectedly-short body, say so rather than treating it as "no existing content to preserve" and writing over it.
+
 ## Principles carried over from the existing workflow
 - **Add, don't rewrite** is the default for EDIT tasks - leave existing article text alone, add only what's needed, unless a full rewrite is explicitly requested.
 - **Approval-gated, incremental** - one article, one change, reviewed and approved before moving to the next. Don't batch multiple articles' edits without checking in.

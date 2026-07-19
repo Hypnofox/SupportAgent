@@ -43,6 +43,11 @@ For "needs attention" tickets, show:
 
 For the other two groups, one line per ticket is enough.
 
+## Failure handling (specific to this skill)
+- If `get_conversation` fails for a ticket in the active bucket, say which ticket and why - don't skip it silently and report the rest as a complete sweep.
+- If both the assigned-queue and unclaimed/pre-triage checks come back empty, say explicitly whether that's a confirmed-empty queue (checked `total_count`, it's zero) or a query that returned nothing unexpectedly - "queue is clear" and "the query came back empty" are not the same claim.
+- If a ticket's `ticket_custom_state_admin_label` doesn't match any known bucket (Submitted/In Progress/other), don't force it into one - flag it separately as an unrecognized state.
+
 ## Hard rules (inherited from AGENTS.md - do not skip)
 - No action that touches Intercom (sending replies, changing ticket status) without explicit approval - this skill only reads and drafts.
 - No em dashes in drafts.

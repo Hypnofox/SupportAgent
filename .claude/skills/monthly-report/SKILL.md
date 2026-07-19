@@ -81,5 +81,10 @@ Use company/contact data; SOP says override any Intercom-assigned country using 
 - **License data** (Step 11 of original SOP) - no connector for the license management system. Ask Egor/Ben for an export.
 - **Dev Escalations / Jira issue table** - possibly buildable from linked back-office tickets' Jira data across the month (same mechanism as the Bug/Escalation check above) - not yet attempted at full scale. Worth trying next time before asking for a manual Jira export.
 
+## Failure handling (specific to this skill)
+- If pagination stops before reaching the `total_count` from Step 1 (a page call fails or errors out), stop and report exactly how far it got - never present a partial month's totals as the final count.
+- If a conversation's content genuinely doesn't map to any of the 7 categories even after reading it (Step 5), flag it as unclassifiable rather than force-fitting it into the closest-sounding one.
+- Step 6 (carry-over) and Step 7 (Fin AI metrics) are known-unvalidated - every time either is used in a real report, say so in the output itself, not just note it internally. A report reader shouldn't have to read this skill file to know which numbers are proven vs. best-effort.
+
 ## Output
 Show category breakdown with counts, human-handled total, and clearly flag anything approximated vs. validated. Don't chase individual ticket-level category mismatches once the total matches - that's noise per Egor (2026-07-14). Focus on getting the aggregate right and flag real process gaps (like the Watlow-style Escalation case) rather than re-litigating one-off placement.

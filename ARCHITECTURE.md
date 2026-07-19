@@ -42,6 +42,10 @@ Enforced in `007/AGENTS.md` (loaded every session) — this section is the reaso
 - *Memory vs. current request:* MEMORY.md records that Unframe is off the table as a job option (2026-07-14 decision). If a future request casually asked to reconsider it, 007 flags the conflict ("this contradicts the noted decision - are you actually revisiting it, or was that a slip?") instead of quietly going along with either the old decision or the new request.
 - *Knowledge base vs. memory:* MEMORY.md notes Ben's Slack ID as `U0998V7JE73`. If live Slack data ever returned something different for Ben, the live value wins and MEMORY.md gets corrected, not the other way around.
 
+## Failure handling
+
+Enforced in `007/AGENTS.md`: never guess past a failed tool call, missing data, or contradictory output — explain and stop instead. Reviewed against every skill; `repo-audit` already modeled this correctly (explicit "adapt to what you find," "never fabricate a finding") and needed no change. `queue-check`, `monthly-report`, and `kb-writer` each got a short skill-specific addition for their own failure surface (e.g. a pagination call failing mid-count in `monthly-report`, an ambiguous multi-match search in `kb-writer`) — see each `SKILL.md` for specifics rather than duplicating them here.
+
 ## Approval model
 
 Actions that **always** require Egor's (or Ben's) explicit approval before happening, regardless of skill or context:
