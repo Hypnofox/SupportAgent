@@ -53,6 +53,8 @@ Hard rules (voice, format, boundaries) are canonical in AGENTS.md — not restat
 ## Repo structure (2026-07-19)
 Ran a scoped architecture cleanup on this repo (no app code exists here, so most of a normal "production-quality" checklist didn't apply). AGENTS.md is now the single canonical source for the hard-rules list - SOUL.md/USER.md/MEMORY.md point to it instead of restating it (they'd already started drifting out of sync with each other). Added a root README.md for repo orientation (folder layout, the two boot paths). Ran a secrets scan - clean, nothing to fix.
 
+Followed up with a 5-phase architecture hardening pass, all documented in `ARCHITECTURE.md`: security/trust model, a formalized and enforced authority hierarchy (AGENTS.md now has the precedence rule - conflicts get named and explained, never silently resolved), per-skill failure handling (never guess, never continue past bad data), and centralized operational config in `007/CONFIG.md` (admin IDs, Slack IDs, monthly-report tag mapping - no longer duplicated across skill files and MEMORY.md). Last step designed the future `memory/` structure (people/decisions/customers/patterns/environment/personal.md split) - documented in ARCHITECTURE.md, not implemented yet; trigger is MEMORY.md crossing ~150-200 lines.
+
 ## Slack access
 - Slack connected 2026-07-14. I can send messages directly (e.g. to Ben - see `007/CONFIG.md` for his Slack ID) rather than only drafting for Egor to forward. Still applies the same judgment as customer drafts - only send after Egor's reviewed/approved the content, since this is external-facing (visible to a teammate) communication.
 
